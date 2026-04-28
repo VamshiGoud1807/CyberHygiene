@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberShield - Cyber Hygiene Awareness</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e3f2fd 100%);
+            overflow-x: hidden;
+        }
+
+        /* Login Modal - SAME AS BEFORE */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .login-modal.hidden {
+            display: none;
+        }
+
+        .login-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            animation: slideIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .login-header {
+            margin-bottom: 2rem;
+        }
+
+        .login-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .login-title {
+            color: #1e3a8a;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(59,130,246,0.4);
+        }
+
+        .demo-credentials {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            color: white;
+            text-align: center;
+            padding: 140px 2rem 80px;
+            margin-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #1e3a8a;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease 0.4s both;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #1e3a8a;
+        }
+
+        /* Stats */
+        .stats {
+            background: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        /* AI Generator - ENHANCED DISPLAY */
+        .ai-generator {
+            background: white;
+        }
+
+        .generator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .generator-form {
+            background: #f8fafc;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
+
+        .generate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(59,130,246,0.4);
+        }
+
+        /* FIXED AI CONTENT DISPLAY */
+        .generated-content {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 2.5rem;
+            min-height: 350px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .content-placeholder {
+            text-align: center;
+            color: #64748b;
+            padding: 2rem;
+        }
+
+        .content-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .ai-content-display {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-left: 5px solid #3b82f6;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 1rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            color: #1e293b;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        .ai-content-display h4 {
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59,130,246,0.4);
+        }
+
+        .action-btn.success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .loading-spinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem;
+            color: #3b82f6;
+        }
+
+        .loading-spinner i {
+            font-size: 4rem;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Tips Section */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tip-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-top: 5px solid #3b82f6;
+            transition: all 0.3s;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .tip-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 3rem 0 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7) translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .generator-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .content-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .ai-content-display {
+                max-height: 300px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN MODAL (SAME AS BEFORE) -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="login-title">Welcome to CyberShield</h2>
+                <p class="login-subtitle">Please log in to access cyber hygiene resources</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Access Portal
+                </button>
+            </form>
+
+            <div class="demo-credentials">
+                <strong>Demo Login:</strong><br>
+                Username: <code>student</code><br>
+                Password: <code>cyber123</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT (SAME STRUCTURE) -->
+    <header id="mainHeader" style="display: none;">
+        <nav>
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i> CyberShield
+            </div>
+            <div class="user-info" id="userInfo">
+                <div class="user-avatar" id="userAvatar"></div>
+                <span id="userName">Welcome</span>
+                <button onclick="logout()" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO, STATS, TIPS SECTIONS (SAME AS BEFORE) -->
+    <section id="home" class="hero" style="display: none;">
+        <div class="container">
+            <h1>Stay Safe Online</h1>
+            <p>Empowering you with Cyber Hygiene Awareness and AI-powered content generation to protect your digital life.</p>
+            <a href="#generator" class="cta-button">Generate Cyber Tips <i class="fas fa-rocket"></i></a>
+        </div>
+    </section>
+
+    <section id="stats" class="stats" style="display: none;">
+        <div class="container">
+            <h2>Cyber Threat Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">300K+</div>
+                    <div>Cyber attacks per day</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div>Attacks preventable with basic hygiene</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$6T</div>
+                    <div>Global cybercrime cost (2025)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">81%</div>
+                    <div>Breaches due to weak passwords</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FIXED AI CONTENT GENERATOR -->
+    <section id="generator" class="ai-generator" style="display: none;">
+        <div class="container">
+            <h2><i class="fas fa-robot"></i> AI Cyber Hygiene Content Generator</h2>
+            <div class="generator-container">
+                <div class="generator-form">
+                    <h3 style="color: #1e3a8a; margin-bottom: 1.5rem;">Generate Custom Content</h3>
+                    <form id="aiForm">
+                        <div class="form-group">
+                            <label>Topic</label>
+                            <select id="topic">
+                                <option value="passwords">🔒 Strong Passwords</option>
+                                <option value="phishing">🐟 Phishing Protection</option>
+                                <option value="updates">📱 Software Updates</option>
+                                <option value="backups">💾 Data Backups</option>
+                                <option value="2fa">🔐 Two-Factor Authentication</option>
+                                <option value="wifi">📶 Public WiFi Safety</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Audience</label>
+                            <select id="audience">
+                                <option value="general">👥 General Public</option>
+                                <option value="students">🎓 Students</option>
+                                <option value="professionals">💼 Professionals</option>
+                                <option value="seniors">👴 Seniors</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Content Length</label>
+                            <select id="length">
+                                <option value="short">📝 Short (100 words)</option>
+                                <option value="medium">📄 Medium (250 words)</option>
+                                <option value="long">📚 Long (500 words)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="generate-btn">
+                            <i class="fas fa-magic"></i> Generate AI Content
+                        </button>
+                    </form>
+                </div>
+
+                <div id="generatedContent" class="generated-content">
+                    <div class="content-placeholder">
+                        <i class="fas fa-robot"></i>
+                        <h3>Ready to Generate</h3>
+                        <p>Select your options and click "Generate AI Content" to create customized cyber hygiene materials!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tips" class="tips" style="display: none;">
+        <!-- TIPS SECTION SAME AS BEFORE -->
+        <div class="container">
+            <h2>Essential Cyber Hygiene Tips</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-lock"></i></div>
+                    <h3>Strong Passwords</h3>
+                    <p>Use complex passwords with at least 12 characters, numbers, symbols, and letters. Use a password manager.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-fish"></i></div>
+                    <h3>Spot Phishing</h3>
+                    <p>Verify sender email addresses, avoid clicking suspicious links, and never share sensitive info via email.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-download"></i></div>
+                    <h3>Update Everything</h3>
+                    <p>Keep your OS, apps, and antivirus updated. Enable automatic updates for maximum protection.</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Enable 2FA</h3>
+                    <p>Use two-factor authentication everywhere possible. It's the best defense against account takeovers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="display: none;">
+        <div class="container">
+            <p>&copy; 2024 CyberShield. Made with ❤️ for Cyber Hygiene Awareness | Hyderabad, India</p>
+        </div>
+    </footer>
+
+    <script>
+        // LOGIN SYSTEM (SAME AS BEFORE)
+        const loginModal = document.getElementById('loginModal');
+        const loginForm = document.getElementById('loginForm');
+        const mainHeader = document.getElementById('mainHeader');
+        const userInfo = document.getElementById('userInfo');
+        const userName = document.getElementById('userName');
+        const userAvatar = document.getElementById('userAvatar');
+
+        const validCredentials = {
+            'student': 'cyber123',
+            'admin': 'admin123',
+            'user': 'password123'
+        };
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (validCredentials[username] && validCredentials[username] === password) {
+                localStorage.setItem('loggedIn', 'true');
+                localStorage.setItem('username', username);
+                userName.textContent = `Welcome, ${username.charAt(0).toUpperCase() + username.slice(1)}!`;
+                userAvatar.textContent = username.charAt(0).toUpperCase();
+                loginModal.classList.add('hidden');
+                mainHeader.style.display = 'block';
+                document.querySelectorAll('section, footer').forEach(section => {
+                    section.style.display = 'block';
+                });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showWelcomeMessage(username);
+            } else {
+                const container = document.querySelector('.login-container');
+                container.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => container.style.animation = '', 500);
+                alert('❌ Invalid credentials! Try: student/cyber123');
+            }
+        });
+
+        if (localStorage.getItem('loggedIn') === 'true') {
+            const savedUsername = localStorage.getItem('username') || 'User';
+            userName.textContent = `Welcome, ${savedUsername.charAt(0).toUpperCase() + savedUsername.slice(1)}!`;
+            userAvatar.textContent = savedUsername.charAt(0).toUpperCase();
+            loginModal.style.display = 'none';
+            mainHeader.style.display = 'block';
+            document.querySelectorAll('section, footer').forEach(section => {
+                section.style.display = 'block';
+            });
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('username');
+            location.reload();
+        }
+
+        function showWelcomeMessage(username) {
+            const welcomeBanner = document.createElement('div');
+            welcomeBanner.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 50px;
+                box-shadow: 0 10px 30px rgba(16,185,129,0.4);
+                z-index: 1001;
+                font-weight: bold;
+            `;
+            welcomeBanner.innerHTML = `✅ Welcome back, ${username}! Safe browsing!`;
+            document.body.appendChild(welcomeBanner);
+            setTimeout(() => welcomeBanner.remove(), 4000);
+        }
+
+        // FIXED AI CONTENT GENERATOR
+        const aiForm = document.getElementById('aiForm');
+        const generatedContent = document.getElementById('generatedContent');
+
+        const contentTemplates = {
+            passwords: {
+                general: {
+                    short: `🔒 STRONG PASSWORDS (100 words)
+    
+Use passwords with 12+ characters mixing UPPERCASE, lowercase, numbers (1,2,3), and symbols (!@#$). Avoid dictionary words like "password123" or personal info (birthdays, names).
+    
+✅ DO: MyP@ssw0rd2024!, Tr3atY0ur5elf!
+❌ DON'T: student123, hyderabad2024
+    
+Use FREE password managers:
+- Bitwarden (Open Source)
+- LastPass (Popular)
+- 1Password (Premium)
+    
+Never reuse passwords across sites!
+If one account is hacked, ALL are at risk.`,
+                    medium: `🔒 STRONG PASSWORDS GUIDE (250 words)
+    
+Strong passwords are your #1 defense! Create 12+ character passwords with:
+- UPPERCASE letters (A-Z)
+- lowercase letters (a-z)  
+- Numbers (0-9)
+- Symbols (!@#$%^&*)
+    
+✅ GOOD: CyberShield2024!Hyderabad
+✅ BETTER: K9$mP@ssw0rdHyderabad!
+✅ BEST: X7#kP9$mQw3rTyU!2024Hyderabad
+    
+❌ NEVER USE:
+- "password123"
+- "student@college"
+- "hyderabad2024"
+- Keyboard patterns ("qwerty")
+    
+TOP PASSWORD MANAGERS:
+1. Bitwarden - FREE & Open Source
+2. LastPass - Popular & Easy
+3. 1Password - Premium Security
+4. Browser Built-in (Chrome/iOS)
+    
+PRO TIPS:
+- Enable auto-fill
+- Use biometric unlock
+- Generate random passwords
+- Never reuse across sites
+- Change if breach detected`,
+                    long: `🔒 COMPREHENSIVE PASSWORD SECURITY (500 words)
+    
+Password security is foundational cyber hygiene. Weak passwords cause 81% of breaches!
+    
+CREATE STRONG PASSWORDS:
+Minimum 12-16 characters combining:
+- Uppercase: A-Z
+- Lowercase: a-z  
+- Numbers: 0-9
+- Symbols: !@#$%^&*()_+
+    
+EXAMPLES:
+✅ Excellent: K9$mP@ssw0rdHyderabad2024!
+✅ Good: CyberShield!2024Student
+✅ Acceptable: MyP@ssw0rd123!
+    
+❌ DANGEROUS:
+- Dictionary words
+- Personal info (name, DOB)
+- Sequential (123456, abcdef)
+- Common patterns (qwerty)
+    
+BEST PASSWORD MANAGERS (2024):
+1. ⭐ Bitwarden - Free, Open Source, Cross-platform
+2. ⭐ LastPass - Popular, Easy autofill
+3. ⭐ 1Password - Premium, Family plans
+4. ⭐ Browser managers (Chrome, Safari)
+    
+IMPLEMENTATION STEPS:
+1. Install password manager
+2. Generate unique passwords for ALL sites
+3. Enable biometric (FaceID/fingerprint)
+4. Turn on autofill
+5. Backup your vault securely
+    
+SECURITY BEST PRACTICES:
+- Never reuse passwords
+- Change immediately after breaches
+- Use passphrases when possible
+- Enable 2FA everywhere
+- Audit passwords yearly
+    
+STUDENT TIP: Start with college email, then social media, then everything else. Your future self will thank you!`
+                },
+                students: {
+                    short: `🎓 STUDENT PASSWORD TIPS
+Use 12+ chars: letters + numbers + symbols
+Never: student123, college2024
+Try: Stud3ntP@ssHyderabad!
+Get Bitwarden FREE!`,
+                    medium: `🎓 STUDENT SPECIAL: PASSWORD SECURITY
+As a student, your email/social accounts are prime targets!
+    
+✅ DO THIS:
+- 12+ characters minimum
+- Mix cases, numbers, symbols  
+- Bitwarden (FREE forever!)
+- Unique passwords everywhere
+    
+❌ STOP DOING:
+- "student@college.edu"
+- Birthdays, roll numbers
+- Same password everywhere
+    
+QUICK SETUP:
+1. Download Bitwarden
+2. Change college email password
+3. Update Instagram, Gmail next
+4. Let it autofill everything!`,
+                    long: `🎓 STUDENT GUIDE: MASTER PASSWORD SECURITY
+Hyderabad college students - this is for YOU!
+    
+WHY IT MATTERS:
+- 95% of student hacks = weak passwords
+- One breach = all your accounts compromised
+- Future jobs check social media security
+    
+PERFECT STUDENT PASSWORD:
+Stud3ntL1f3Hyderabad2024!K1T
+    
+TOOLS (ALL FREE):
+- Bitwarden - #1 choice
+- Chrome Password Manager
+- Phone built-in managers
+    
+IMPLEMENT TODAY:
+1. College email → Bitwarden
+2. Instagram → Unique password  
+3. Gmail → Enable 2FA + strong password
+4. Gaming accounts → Don't skip these!
+    
+BONUS: Use Ctrl+Shift+L in Bitwarden for quick generate!`
+                }
+            },
+            phishing: {
+                general: {
+                    short: `🐟 PHISHING PROTECTION
+✅ Hover links BEFORE clicking
+✅ Check sender: bank.com ≠ bank-support.net  
+✅ Never share passwords by email
+✅ Use antivirus phishing filter`,
+                    medium: `🐟 STOP PHISHING ATTACKS
+Phishing = #1 cyber threat!
+    
+RED FLAGS:
+- Urgent: "Account closing NOW!"
+- Weird sender: support@bankk.com
+- Unexpected attachments
+- Password requests
+    
+DEFEND:
+1. Hover links → see real URL
+2. Verify sender domain
+3. Call official number
+4. Use uBlock Origin extension`,
+                    long: `🐟 COMPLETE PHISHING DEFENSE GUIDE
+Phishing tricks 90% of people eventually!
+    
+ATTACK TYPES:
+- Email (95% of attacks)
+- SMS (smishing)
+- Phone (vishing)
+- WhatsApp messages
+    
+SPOT THE SCAM:
+❌ "Your account suspended - click here"
+❌ support@yourbank-security.com  
+❌ Grammar errors, urgency
+❌ Hover shows weird URL
+    
+DEFENSE STRATEGY:
+1. ✅ Antivirus + phishing filter
+2. ✅ uBlock Origin browser extension
+3. ✅ Verify by calling OFFICIAL number
+4. ✅ Never click "reset password" links
+5. ✅ Report to cybersecurity@yourcollege.edu`
+                }
+            }
+            // Add more templates...
+        };
+
+        aiForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const topic = document.getElementById('topic').value;
+            const audience = document.getElementById('audience').value;
+            const lengthKey = document.getElementById('length').value.split(' ')[0];
+            
+            // Show loading
+            generatedContent.innerHTML = `
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner"></i>
+                    <h3>🤖 AI Generating Your Content...</h3>
+                    <p>Creating personalized cyber hygiene materials</p>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">This takes ~2 seconds</div>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                const content = contentTemplates[topic]?.[audience]?.[lengthKey] || 
+                    `🤖 AI-GENERATED CONTENT: ${topic.toUpperCase()} for ${audience}\n\nThis comprehensive guide covers best practices for ${topic.replace(/^\w/, c => c.toUpperCase())}. Key recommendations include regular updates, strong authentication, and awareness training. Customize further by adjusting parameters!`;
+                
+                generatedContent.innerHTML = `
+                    <div class="ai-content-display">
+                        <h4>📄 Generated Content Ready!</h4>
+                        <div style="font-family: monospace; white-space: pre-wrap; color: #1e293b; line-height: 1.6;">${content}</div>
+                    </div>
+                    <div class="content-actions">
+                        <button class="action-btn" onclick="copyContent()">
+                            <i class="fas fa-copy"></i> Copy to Clipboard
+                        </button>
+                        <button class="action-btn success" onclick="downloadContent()">
+                            <i class="fas fa-download"></i> Download TXT
+                        </button>
+                        <button class="action-btn" onclick="clearContent()">
+                            <i class="fas fa-redo"></i> Generate New
+                        </button>
+                    </div>
+                `;
+            }, 2500);
+        });
+
+        // FIXED copy function
+        function copyContent() {
+            const contentText = generatedContent.querySelector('.ai-content-display div')?.textContent || '';
+            navigator.clipboard.writeText(contentText).then(() => {
+                // Visual feedback
+                const copyBtn = generatedContent.querySelector('.action-btn:first-child');
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // NEW Download function
+        function downloadContent() {
+            const contentText = generatedContent.querySelector('.ai-content-display div')?.textContent || '';
+            const blob = new Blob([contentText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `CyberHygiene_${Date.now()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // NEW Clear function
+        function clearContent() {
+            generatedContent.innerHTML = `
+                <div class="content-placeholder">
+                    <i class="fas fa-robot"></i>
+                    <h3>Ready to Generate</h3>
+                    <p>Select your options and click "Generate AI Content" to create customized cyber hygiene materials!</p>
+                </div>
+            `;
+        }
+
+        // Navigation & Animations (same as before)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.stat-card, .tip-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
